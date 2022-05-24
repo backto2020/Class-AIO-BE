@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const jwtKey = require('./jwtKey');
+const ErrObj = require('../../utils/ErrObj');
 
 const getUser = (token) => {
   let user;

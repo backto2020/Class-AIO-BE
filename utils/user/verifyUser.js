@@ -1,24 +1,17 @@
 const jwt = require('jsonwebtoken');
 const jwtKey = require('./jwtKey');
 const db = require('../db');
+const ErrObj = require('../../utils/ErrObj');
 
 const verifyUser = (username, password) => {
   console.log(`login with name: ${username}, password: ${password}`);
-  if (!username || !password) return '';
-  const sql = `select * from user where username='${username}'`;
   return new Promise((res, rej) => {
+    if (!username || !password) res(new ErrObj(50010, '账号或密码格式错误'));
+    const sql = `select * from user where username='${username}'`;
     db.query(sql, (err, data) => {
       if (err) throw err;
-      if (data.length === 0)
-        res({
-          code: 50040,
-          message: '没有该账号'
-        });
-      else if (data[0].password !== password)
-        res({
-          code: 50041,
-          message: '密码错误'
-        });
+      if (data.length === 0) res(new ErrObj(50040, '没有该账号'));
+      else if (data[0].password !== password) res(new ErrObj(50041, '密码错误'));
       else {
         const token = jwt.sign({ username, password }, jwtKey, { expiresIn: '7d' });
         console.log(token);
