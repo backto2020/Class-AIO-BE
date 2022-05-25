@@ -39,6 +39,7 @@ create table if not exists `user` (
 const user = require('koa-router')();
 const ErrObj = require('../../utils/ErrObj');
 const getUser = require('../../utils/user/getUser');
+const getUserInfo = require('../../utils/user/getUserInfo')
 const verifyUser = require('../../utils/user/verifyUser');
 const newUser = require('../../utils/user/newUser');
 const modifyUser = require('../../utils/user/modifyUser');
@@ -58,17 +59,8 @@ user.get('/info', async (ctx, next) => {
     ctx.response.body = { ...user };
     return;
   }
-  ctx.response.body = {
-    code: 20000,
-    message: '查询成功',
-    data: {
-      id: 12,
-      username: 'admin',
-      name: '李华',
-      avatar: 'https://s2.loli.net/2022/05/11/JNFt98pAWqZlznw.jpg',
-      admin: true
-    }
-  };
+  const res = await getUserInfo(user.sid);
+  ctx.response.body = res;
 });
 
 user.put('/', async (ctx, next) => {
