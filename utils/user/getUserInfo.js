@@ -6,6 +6,7 @@ const getUserInfo = (sid) => {
   return new Promise(async (res, rej) => {
     if (typeof sid === 'undefined') {
       res(new ErrObj(40115, '未指定学号'));
+      return;
     }
     const getInfoSql = `select * from user where sid=${sid}`;
     db.query(getInfoSql, (err, data) => {
