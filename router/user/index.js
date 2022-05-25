@@ -101,9 +101,6 @@ user.post('/', async (ctx, next) => {
     ctx.response.body = errObj;
     return;
   }
-  const arr1 = ctx.request.url.split('/');
-  const id = arr1[arr1.length - 1].split('?')[0];
-  console.log(id);
   const modiUser = ctx.request.body;
   const res = await modifyUser(modiUser);
   ctx.response.body = res;
