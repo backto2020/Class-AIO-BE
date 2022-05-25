@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/main.js"
+    "start": "node src/main.js",
+    "lint": "eslint --ext .js src"
   },
   "author": "",
   "license": "ISC",
@@ -16,5 +17,8 @@
     "koa-router": "7.0.0",
     "koa2": "^2.0.0-alpha.7",
     "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "eslint": "^5.10.0"
   }
 }
