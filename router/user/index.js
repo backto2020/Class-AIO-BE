@@ -39,11 +39,12 @@ create table if not exists `user` (
 const user = require('koa-router')();
 const ErrObj = require('../../utils/ErrObj');
 const getUser = require('../../utils/user/getUser');
-const getUserInfo = require('../../utils/user/getUserInfo')
+const getUserInfo = require('../../utils/user/getUserInfo');
 const verifyUser = require('../../utils/user/verifyUser');
 const newUser = require('../../utils/user/newUser');
 const modifyUser = require('../../utils/user/modifyUser');
 const deleteUser = require('../../utils/user/deleteUser');
+const getUserList = require('../../utils/user/getUserList');
 
 user.post('/login', async (ctx, next) => {
   const res = await verifyUser(ctx.request.body.username, ctx.request.body.password);
@@ -60,6 +61,23 @@ user.get('/info', async (ctx, next) => {
     return;
   }
   const res = await getUserInfo(user.sid);
+  ctx.response.body = res;
+});
+
+user.get('/list', async (ctx, next) => {
+  const token = ctx.request.header['x-token'];
+  const user = getUser(token);
+  if (user.constructor === ErrObj) {
+    console.log(user);
+    ctx.response.body = { ...user };
+    return;
+  }
+  if (user.admin === false) {
+    const errObj = new ErrObj(50005, '用户非管理员');
+    ctx.response.body = errObj;
+    return;
+  }
+  const res = await getUserList();
   ctx.response.body = res;
 });
 
