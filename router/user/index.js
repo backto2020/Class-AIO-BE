@@ -34,12 +34,14 @@ create table if not exists `user` (
 // +----------+--------------+------+-----+---------+-------+
 
 // insert into user values (19000000, 'admin', 'admin', '管理员', 'https://s2.loli.net/2022/05/11/JNFt98pAWqZlznw.jpg', '男', '1970-12-12', '智能工程学院', '交通工程', 2019, 1);
+// (19101010, 'wangw5', 'SuperSecretPwd', '王五', 'https://s2.loli.net/2022/05/11/JNFt98pAWqZlznw.jpg', '女', '1970-04-06', '智能工程学院', '交通工程', 2019, 1);
 
 const user = require('koa-router')();
 const ErrObj = require('../../utils/ErrObj');
 const getUser = require('../../utils/user/getUser');
 const verifyUser = require('../../utils/user/verifyUser');
 const newUser = require('../../utils/user/newUser');
+const modifyUser = require('../../utils/user/modifyUser');
 
 user.post('/login', async (ctx, next) => {
   const res = await verifyUser(ctx.request.body.username, ctx.request.body.password);
@@ -83,6 +85,27 @@ user.put('/', async (ctx, next) => {
   }
   const newUserObj = ctx.request.body;
   const res = await newUser(newUserObj);
+  ctx.response.body = res;
+});
+
+user.post('/', async (ctx, next) => {
+  const token = ctx.request.header['x-token'];
+  const user = getUser(token);
+  if (user.constructor === ErrObj) {
+    console.log(user);
+    ctx.response.body = { ...user };
+    return;
+  }
+  if (user.admin === false) {
+    const errObj = new ErrObj(50005, '用户非管理员');
+    ctx.response.body = errObj;
+    return;
+  }
+  const arr1 = ctx.request.url.split('/');
+  const id = arr1[arr1.length - 1].split('?')[0];
+  console.log(id);
+  const modiUser = ctx.request.body;
+  const res = await modifyUser(modiUser);
   ctx.response.body = res;
 });
 
