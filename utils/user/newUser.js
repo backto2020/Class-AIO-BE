@@ -20,6 +20,13 @@ const newUser = (userObj) => {
       typeof admin === 'undefined'
     ) {
       res(new ErrObj(40115, '不满足字段非空的要求'));
+      return;
+    }
+    const regx = /^(19[7-9][0-9]|20[012][0-9])-(1[0-2]|0?[1-9])-([1-2][0-9]|3[01]|0?[1-9])$/;
+    // test: 1970-1-1 1970-01-01 1969-01-01 1979-7-01 2030-12-21 2022-01-31 2022-12-31
+    if (!regx.test(userObj.birthday)) {
+      res(new ErrObj(40116, '生日非有效值或格式错误'));
+      return;
     }
     const dup = await new Promise((res2, _) => {
       const checkDuplicateSql = `select * from user where sid=${sid} or username='${username}'`;
