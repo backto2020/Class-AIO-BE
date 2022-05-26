@@ -4,6 +4,7 @@ const getUser = require('../../utils/user/getUser');
 const checkAdmin = require('../../utils/user/checkAdmin');
 const getNotiList = require('../../utils/noti/getNotiList');
 const newNoti = require('../../utils/noti/newNoti');
+const modifyNoti = require('../../utils/noti/modifyNoti');
 
 noti.get('/', async (ctx, next) => {
   const user = getUser(ctx.request.header['x-token']);
@@ -23,6 +24,17 @@ noti.put('/', async (ctx, next) => {
   }
   const newNotiObj = ctx.request.body;
   const res = await newNoti(newNotiObj);
+  ctx.response.body = res;
+});
+
+noti.post('/', async (ctx, next) => {
+  const admin = await checkAdmin(ctx.request.header['x-token']);
+  if (admin.constructor === ErrObj) {
+    ctx.response.body = admin;
+    return;
+  }
+  const modiNotiObj = ctx.request.body;
+  const res = await modifyNoti(modiNotiObj);
   ctx.response.body = res;
 });
 
