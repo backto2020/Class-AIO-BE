@@ -7,6 +7,7 @@ const newUser = require('../../utils/user/newUser');
 const modifyUser = require('../../utils/user/modifyUser');
 const deleteUser = require('../../utils/user/deleteUser');
 const getUserList = require('../../utils/user/getUserList');
+const checkAdmin = require('../../utils/user/checkAdmin');
 
 user.post('/login', async (ctx, next) => {
   const res = await verifyUser(ctx.request.body.username, ctx.request.body.password);
@@ -27,16 +28,9 @@ user.get('/info', async (ctx, next) => {
 });
 
 user.get('/list', async (ctx, next) => {
-  const token = ctx.request.header['x-token'];
-  const user = getUser(token);
-  if (user.constructor === ErrObj) {
-    console.log(user);
-    ctx.response.body = { ...user };
-    return;
-  }
-  if (user.admin === false) {
-    const errObj = new ErrObj(50005, '用户非管理员');
-    ctx.response.body = errObj;
+  const admin = await checkAdmin(ctx.request.header['x-token']);
+  if (admin.constructor === ErrObj) {
+    ctx.response.body = admin;
     return;
   }
   const res = await getUserList();
@@ -44,16 +38,9 @@ user.get('/list', async (ctx, next) => {
 });
 
 user.put('/', async (ctx, next) => {
-  const token = ctx.request.header['x-token'];
-  const user = getUser(token);
-  if (user.constructor === ErrObj) {
-    console.log(user);
-    ctx.response.body = { ...user };
-    return;
-  }
-  if (user.admin === false) {
-    const errObj = new ErrObj(50005, '用户非管理员');
-    ctx.response.body = errObj;
+  const admin = await checkAdmin(ctx.request.header['x-token']);
+  if (admin.constructor === ErrObj) {
+    ctx.response.body = admin;
     return;
   }
   const newUserObj = ctx.request.body;
@@ -62,16 +49,9 @@ user.put('/', async (ctx, next) => {
 });
 
 user.post('/', async (ctx, next) => {
-  const token = ctx.request.header['x-token'];
-  const user = getUser(token);
-  if (user.constructor === ErrObj) {
-    console.log(user);
-    ctx.response.body = { ...user };
-    return;
-  }
-  if (user.admin === false) {
-    const errObj = new ErrObj(50005, '用户非管理员');
-    ctx.response.body = errObj;
+  const admin = await checkAdmin(ctx.request.header['x-token']);
+  if (admin.constructor === ErrObj) {
+    ctx.response.body = admin;
     return;
   }
   const modiUser = ctx.request.body;
@@ -80,16 +60,9 @@ user.post('/', async (ctx, next) => {
 });
 
 user.delete('/:id', async (ctx, next) => {
-  const token = ctx.request.header['x-token'];
-  const user = getUser(token);
-  if (user.constructor === ErrObj) {
-    console.log(user);
-    ctx.response.body = { ...user };
-    return;
-  }
-  if (user.admin === false) {
-    const errObj = new ErrObj(50005, '用户非管理员');
-    ctx.response.body = errObj;
+  const admin = await checkAdmin(ctx.request.header['x-token']);
+  if (admin.constructor === ErrObj) {
+    ctx.response.body = admin;
     return;
   }
   const arr1 = ctx.request.url.split('/');
