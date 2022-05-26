@@ -1,5 +1,6 @@
 const db = require('../db');
-const ErrObj = require('../../utils/ErrObj');
+const ErrObj = require('../ErrObj');
+const ResObj = require('../ResObj');
 
 const deleteUser = (sid) => {
   console.log('Delete a User: ', sid);
@@ -24,10 +25,7 @@ const deleteUser = (sid) => {
       console.log(delSql);
       db.query(delSql, (err, data) => {
         if (err) throw err;
-        res2({
-          code: 20000,
-          message: '删除成功'
-        });
+        res2(new ResObj('删除成功'));
       });
     });
     res(data);

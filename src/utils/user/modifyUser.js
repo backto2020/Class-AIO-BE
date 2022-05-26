@@ -1,5 +1,6 @@
 const db = require('../db');
-const ErrObj = require('../../utils/ErrObj');
+const ErrObj = require('../ErrObj');
+const ResObj = require('../ResObj');
 
 const modifyUser = (userObj) => {
   console.log('Modify a User: ', userObj);
@@ -32,10 +33,7 @@ const modifyUser = (userObj) => {
       console.log(modiSql);
       db.query(modiSql, (err, data) => {
         if (err) throw err;
-        res2({
-          code: 20000,
-          message: '修改成功'
-        });
+        res2(new ResObj('修改成功'));
       });
     });
     res(data);

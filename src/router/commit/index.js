@@ -4,6 +4,7 @@ const path = require('path');
 const mkdirIfNoExist = require('../../utils/mkdirIfNoExist');
 const getUser = require('../../utils/user/getUser');
 const ErrObj = require('../../utils/ErrObj');
+const ResObj = require('../../utils/ResObj');
 
 commit.post('/:id', async (ctx, next) => {
   const arr1 = ctx.request.url.split('/');
@@ -37,11 +38,7 @@ commit.post('/:id', async (ctx, next) => {
     });
     ctx.request.files[name];
   }
-  ctx.response.body = {
-    code: 20000,
-    message: '上传成功',
-    data: JSON.stringify(ctx.request.files)
-  };
+  ctx.response.body = new ResObj('上传成功', JSON.stringify(ctx.request.files));
 });
 
 module.exports = commit;

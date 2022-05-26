@@ -1,5 +1,6 @@
 const db = require('../db');
-const ErrObj = require('../../utils/ErrObj');
+const ErrObj = require('../ErrObj');
+const ResObj = require('../ResObj');
 
 const newUser = (userObj) => {
   console.log('New a User: ', userObj);
@@ -44,10 +45,7 @@ const newUser = (userObj) => {
       const insertSql = `insert into user values (${sid}, '${username}', '${password}', '${name}', '${avatar}', '${gender}', '${birthday}', '${school}', '${major}', ${grade}, ${admin})`;
       db.query(insertSql, (err, data) => {
         if (err) throw err;
-        res2({
-          code: 20000,
-          message: '创建成功'
-        });
+        res2(new ResObj('创建成功'));
       });
     });
     res(data);

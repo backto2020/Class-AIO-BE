@@ -4,11 +4,11 @@ const ResObj = require('../ResObj');
 
 const getUserList = () => {
   return new Promise((res, _) => {
-    let sql = `select * from user`;
-    console.log(sql);
+    let sql = `select * from noti`;
+    console.log(`return ${sql.length} rows`);
     db.query(sql, (err, data) => {
       if (err) {
-        res(new ErrObj(50100, 'Unknown error!'));
+        res(new ErrObj(50200, 'Unknown error!'));
         throw err;
       }
       res(new ResObj('查询成功', data));

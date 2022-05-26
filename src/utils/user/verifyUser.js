@@ -1,7 +1,8 @@
 const jwt = require('jsonwebtoken');
 const jwtKey = require('./jwtKey');
 const db = require('../db');
-const ErrObj = require('../../utils/ErrObj');
+const ErrObj = require('../ErrObj');
+const ResObj = require('../ResObj');
 
 const verifyUser = (username, password) => {
   console.log(`login with name: ${username}, password: ${password}`);
@@ -17,11 +18,7 @@ const verifyUser = (username, password) => {
           expiresIn: '7d'
         });
         console.log(token);
-        res({
-          code: 20000,
-          message: '登陆成功',
-          data: { token }
-        });
+        res(new ResObj('登陆成功', { token }));
       }
     });
   });
