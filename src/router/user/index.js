@@ -16,11 +16,9 @@ user.post('/login', async (ctx, next) => {
 });
 
 user.get('/info', async (ctx, next) => {
-  const token = ctx.request.header['x-token'];
-  const user = getUser(token);
+  const user = getUser(ctx.request.header['x-token']);
   if (user.constructor === ErrObj) {
-    console.log(user);
-    ctx.response.body = { ...user };
+    ctx.response.body = user;
     return;
   }
   const res = await getUserInfo(user.sid);
