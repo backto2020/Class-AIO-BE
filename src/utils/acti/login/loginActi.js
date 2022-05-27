@@ -5,7 +5,6 @@ const ResObj = require('../../ResObj');
 const loginActi = (sid, aid) => {
   console.log(`User ${sid} login acti: ${aid}...`);
   return new Promise(async (res, rej) => {
-    const { title, begin, end, content, type, login } = sid;
     if (isNaN(parseInt(sid) || isNaN(parseInt(aid)))) {
       const err = new ErrObj(40315, '学号或活动ID无效');
       console.error(err);
