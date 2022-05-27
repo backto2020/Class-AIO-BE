@@ -6,6 +6,7 @@ const getActiList = require('../../utils/acti/getActiList');
 const newActi = require('../../utils/acti/newActi');
 const modifyActi = require('../../utils/acti/modifyActi');
 const deleteActi = require('../../utils/acti/deleteActi');
+const actiLogin = require('./login');
 
 acti.get('/', async (ctx, next) => {
   const user = getUser(ctx.request.header['x-token']);
@@ -50,5 +51,7 @@ acti.delete('/:id', async (ctx, next) => {
   const res = await deleteActi(id);
   ctx.response.body = res;
 });
+
+acti.use('/login', actiLogin.routes(), actiLogin.allowedMethods());
 
 module.exports = acti;
