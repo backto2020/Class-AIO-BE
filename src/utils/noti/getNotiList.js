@@ -2,7 +2,7 @@ const db = require('../db');
 const ErrObj = require('../ErrObj');
 const ResObj = require('../ResObj');
 
-const getUserList = () => {
+const getNotiList = () => {
   return new Promise((res, _) => {
     let sql = `select * from noti`;
     db.query(sql, (err, data) => {
@@ -16,4 +16,4 @@ const getUserList = () => {
   });
 };
 
-module.exports = getUserList;
+module.exports = getNotiList;
