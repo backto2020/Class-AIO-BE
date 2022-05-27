@@ -12,13 +12,9 @@ const getActiLoginStatus = (id) => {
     }
     const getLogined = new Promise((res2, _) => {
       const loginedSql = `
-        select distinct u.sid, u.name, a.time
+        select u.sid, u.name, a.time
         from user u, acti_login a
-        where u.sid in (
-          select sid
-          from acti_login
-          where sid=u.sid and aid=${id}
-        );
+        where u.sid=a.sid;
       `;
       db.query(loginedSql, (err, data) => {
         if (err) throw err;
@@ -27,7 +23,7 @@ const getActiLoginStatus = (id) => {
     });
     const getUnlogin = new Promise((res2, _) => {
       const unloginSql = `
-        select distinct u.sid, u.name, a.time
+        select distinct u.sid, u.name
         from user u, acti_login a
         where u.sid not in (
           select sid
