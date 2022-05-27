@@ -14,7 +14,7 @@ const getActiLoginStatus = (id) => {
       const loginedSql = `
         select u.sid, u.name, a.time
         from user u, acti_login a
-        where u.sid=a.sid;
+        where u.sid=a.sid and a.aid=${id};
       `;
       db.query(loginedSql, (err, data) => {
         if (err) throw err;
