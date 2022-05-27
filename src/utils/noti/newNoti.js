@@ -3,7 +3,7 @@ const ErrObj = require('../ErrObj');
 const ResObj = require('../ResObj');
 
 const newNoti = (notiObj) => {
-  console.log('New a User: ', notiObj);
+  console.log('New a Noti: ', notiObj);
   return new Promise(async (res, rej) => {
     const { title, time, content, type } = notiObj;
     if (
