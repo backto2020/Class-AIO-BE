@@ -5,8 +5,11 @@ const ResObj = require('../ResObj');
 const deleteNoti = (id) => {
   console.log('Delete a Noti: ', id);
   return new Promise(async (res, rej) => {
-    if (typeof id === 'undefined') {
-      res(new ErrObj(40215, '未指定通知ID'));
+    if (isNaN(parseInt(id))) {
+      const err = new ErrObj(40315, '未指定活动ID');
+      console.error(err);
+      res(err);
+      return;
     }
     const exist = await new Promise((res2, _) => {
       const checkExistSql = `select * from noti where id=${id}`;
