@@ -12,12 +12,12 @@ const getActiLoginStatus = (id) => {
     }
     const getLogined = new Promise((res2, _) => {
       const loginedSql = `
-        select distinct u.sid, u.name
-        from user u
+        select distinct u.sid, u.name, a.time
+        from user u, acti_login a
         where u.sid in (
-          select a.sid
-          from acti_login a
-          where a.sid=u.sid and a.aid=${id}
+          select sid
+          from acti_login
+          where sid=u.sid and aid=${id}
         );
       `;
       db.query(loginedSql, (err, data) => {
@@ -27,12 +27,12 @@ const getActiLoginStatus = (id) => {
     });
     const getUnlogin = new Promise((res2, _) => {
       const unloginSql = `
-        select distinct u.sid, u.name
-        from user u
+        select distinct u.sid, u.name, a.time
+        from user u, acti_login a
         where u.sid not in (
-          select a.sid
-          from acti_login a
-          where a.sid=u.sid and a.aid=${id}
+          select sid
+          from acti_login
+          where sid=u.sid and aid=${id}
         );
       `;
       db.query(unloginSql, (err, data) => {
