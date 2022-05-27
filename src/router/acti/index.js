@@ -14,7 +14,7 @@ acti.get('/', async (ctx, next) => {
     ctx.response.body = user;
     return;
   }
-  const res = await getActiList();
+  const res = await getActiList(user.sid);
   ctx.response.body = res;
 });
 
