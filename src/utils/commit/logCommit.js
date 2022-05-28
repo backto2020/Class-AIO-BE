@@ -27,7 +27,7 @@ const logCommit = (sid, cid) => {
     `;
     const updateSql = `
       update commit_log set
-        time=${new Date().toISOString().slice(0, 19).replace('T', ' ')}
+        time='${new Date().toISOString().slice(0, 19).replace('T', ' ')}'
       where sid=${sid} and cid=${cid}
     `;
     const sql = dup !== 0 ? updateSql : insertSql;
