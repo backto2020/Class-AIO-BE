@@ -3,9 +3,7 @@ create table if not exists `acti_login` (
   `sid` int unsigned not null,
   `aid` int unsigned not null,
   `time` timestamp not null,
-  primary key ( `id` ),
-  foreign key (`sid`) references user(`sid`),
-  foreign key (`aid`) references acti(`id`)
+  primary key ( `id` )
 );
 
 -- describe acti_login;
