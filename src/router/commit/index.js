@@ -23,7 +23,7 @@ commit.get('/', async (ctx, next) => {
   ctx.response.body = await getCommitList();
 });
 
-commit.put('/', async (ctx, next) => {
+commit.post('/', async (ctx, next) => {
   const admin = await checkAdmin(ctx.request.header['x-token']);
   if (admin.constructor === ErrObj) {
     ctx.response.body = admin;
@@ -33,7 +33,7 @@ commit.put('/', async (ctx, next) => {
   ctx.response.body = await newCommit(newCommitObj);
 });
 
-commit.post('/', async (ctx, next) => {
+commit.put('/', async (ctx, next) => {
   const admin = await checkAdmin(ctx.request.header['x-token']);
   if (admin.constructor === ErrObj) {
     ctx.response.body = admin;
@@ -54,7 +54,7 @@ commit.delete('/:id', async (ctx, next) => {
   ctx.response.body = await deleteCommit(id);
 });
 
-commit.post('/:id', async (ctx, next) => {
+commit.put('/:id', async (ctx, next) => {
   let user = getUser(ctx.request.header['x-token']);
   if (user.constructor === ErrObj) {
     ctx.response.body = user;

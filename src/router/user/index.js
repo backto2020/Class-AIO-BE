@@ -35,7 +35,7 @@ user.get('/list', async (ctx, next) => {
   ctx.response.body = res;
 });
 
-user.put('/', async (ctx, next) => {
+user.post('/', async (ctx, next) => {
   const admin = await checkAdmin(ctx.request.header['x-token']);
   if (admin.constructor === ErrObj) {
     ctx.response.body = admin;
@@ -46,7 +46,7 @@ user.put('/', async (ctx, next) => {
   ctx.response.body = res;
 });
 
-user.post('/', async (ctx, next) => {
+user.put('/', async (ctx, next) => {
   const admin = await checkAdmin(ctx.request.header['x-token']);
   if (admin.constructor === ErrObj) {
     ctx.response.body = admin;

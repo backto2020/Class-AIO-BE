@@ -17,7 +17,7 @@ noti.get('/', async (ctx, next) => {
   ctx.response.body = res;
 });
 
-noti.put('/', async (ctx, next) => {
+noti.post('/', async (ctx, next) => {
   const admin = await checkAdmin(ctx.request.header['x-token']);
   if (admin.constructor === ErrObj) {
     ctx.response.body = admin;
@@ -28,7 +28,7 @@ noti.put('/', async (ctx, next) => {
   ctx.response.body = res;
 });
 
-noti.post('/', async (ctx, next) => {
+noti.put('/', async (ctx, next) => {
   const admin = await checkAdmin(ctx.request.header['x-token']);
   if (admin.constructor === ErrObj) {
     ctx.response.body = admin;

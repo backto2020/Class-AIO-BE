@@ -18,7 +18,7 @@ acti.get('/', async (ctx, next) => {
   ctx.response.body = res;
 });
 
-acti.put('/', async (ctx, next) => {
+acti.post('/', async (ctx, next) => {
   const admin = await checkAdmin(ctx.request.header['x-token']);
   if (admin.constructor === ErrObj) {
     ctx.response.body = admin;
@@ -29,7 +29,7 @@ acti.put('/', async (ctx, next) => {
   ctx.response.body = res;
 });
 
-acti.post('/', async (ctx, next) => {
+acti.put('/', async (ctx, next) => {
   const admin = await checkAdmin(ctx.request.header['x-token']);
   if (admin.constructor === ErrObj) {
     ctx.response.body = admin;
