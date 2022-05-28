@@ -30,7 +30,6 @@ const logCommit = (sid, cid) => {
         time=${new Date().toISOString().slice(0, 19).replace('T', ' ')}
       where sid=${sid} and cid=${cid}
     `;
-    console.log(dup);
     const sql = dup !== 0 ? updateSql : insertSql;
     db.query(sql, (err, data) => {
       if (err) throw err;
