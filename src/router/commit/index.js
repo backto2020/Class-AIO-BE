@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const mkdirIfNoExist = require('../../utils/mkdirIfNoExist');
 const getUser = require('../../utils/user/getUser');
+const getUserInfo = require('../../utils/user/getUserInfo');
 const checkAdmin = require('../../utils/user/checkAdmin');
 const getCommitList = require('../../utils/commit/getCommitList');
 const newCommit = require('../../utils/commit/newCommit');
@@ -54,11 +55,12 @@ commit.delete('/:id', async (ctx, next) => {
 });
 
 commit.post('/:id', async (ctx, next) => {
-  const user = getUser(ctx.request.header['x-token']);
+  let user = getUser(ctx.request.header['x-token']);
   if (user.constructor === ErrObj) {
     ctx.response.body = user;
     return;
   }
+  user = (await getUserInfo(user.sid)).data;
   const arr1 = ctx.request.url.split('/');
   const id = arr1[arr1.length - 1].split('?')[0];
   console.log(`commit id: ${id}, received...`);
