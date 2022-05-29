@@ -2,6 +2,7 @@ const Koa = require('koa2');
 const cors = require('koa-cors');
 const koaBody = require('koa-body');
 const router = require('./router');
+const static_ = require('koa-static');
 
 const mkdirIfNoExist = require('./utils/mkdirIfNoExist');
 mkdirIfNoExist('./upload');
@@ -22,6 +23,8 @@ app.use(async (ctx, next) => {
 
 app.use(cors());
 app.use(koaBody({ multipart: true }));
+
+app.use(static_('./static'));
 
 // add router middleware:
 app.use(router.routes(), router.allowedMethods());
