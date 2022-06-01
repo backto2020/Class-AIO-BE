@@ -50,6 +50,10 @@ const selectCourse = (sid, selectedCourses) => {
       res(deleteRes);
       return;
     }
+    if(selectedCourseIdList.length === 0) {
+      res(new ResObj('选课成功'));
+      return;
+    }
     const insertRes = await new Promise((res2, _) => {
       const insertSql = `insert into course_select (sid, cid) values ${selectedCourseIdList
         .map((course) => `(${sid}, ${course})`)
