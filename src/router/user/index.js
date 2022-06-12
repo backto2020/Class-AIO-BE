@@ -65,6 +65,11 @@ user.delete('/:id', async (ctx, next) => {
   }
   const arr1 = ctx.request.url.split('/');
   const sid = arr1[arr1.length - 1].split('?')[0];
+  console.log(sid, admin);
+  if (sid == admin.sid) {
+    ctx.response.body = new ErrObj(40123, '不能删除自己');
+    return;
+  }
   const res = await deleteUser(sid);
   ctx.response.body = res;
 });
