@@ -7,8 +7,21 @@ const modifyUser = (userObj) => {
   return new Promise(async (res, rej) => {
     const { sid, username, password, name, avatar, gender, birthday, school, major, grade, admin } =
       userObj;
-    if (typeof sid === 'undefined') {
-      res(new ErrObj(40115, '未指定学号'));
+    if (
+      !sid ||
+      !username ||
+      !password ||
+      !name ||
+      !avatar ||
+      !gender ||
+      !birthday ||
+      !school ||
+      !major ||
+      !grade ||
+      typeof admin === 'undefined'
+    ) {
+      res(new ErrObj(40115, '不满足字段非空的要求'));
+      return;
     }
     const exist = await new Promise((res2, _) => {
       const checkDuplicateSql = `select * from user where sid=${sid} or username='${username}'`;

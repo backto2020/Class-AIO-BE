@@ -8,16 +8,16 @@ const newUser = (userObj) => {
     const { sid, username, password, name, avatar, gender, birthday, school, major, grade, admin } =
       userObj;
     if (
-      typeof sid === 'undefined' ||
-      typeof username === 'undefined' ||
-      typeof password === 'undefined' ||
-      typeof name === 'undefined' ||
-      typeof avatar === 'undefined' ||
-      typeof gender === 'undefined' ||
-      typeof birthday === 'undefined' ||
-      typeof school === 'undefined' ||
-      typeof major === 'undefined' ||
-      typeof grade === 'undefined' ||
+      !sid ||
+      !username ||
+      !password ||
+      !name ||
+      !avatar ||
+      !gender ||
+      !birthday ||
+      !school ||
+      !major ||
+      !grade ||
       typeof admin === 'undefined'
     ) {
       res(new ErrObj(40115, '不满足字段非空的要求'));
